@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Secure and Sustainable System Scaling Lab</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <base target="_blank">
+</head>
+<body>
+    
+
+<div class="container page">
+    <div class="border-2 border-print-0 border-dark mb-2 pb-2 pb-print-0 mb-print-1" style="padding-bottom: 0px !important;">
+        {{> s4l-header }}
+    </div>
+    <div class="row g-4">
+        <div class="col-12 col-md-6 order-1 order-md-1">
+            <p>Our research enables secure and sustainable scaling of computing systems. We tackle the security, sustainability, dependability, and performance challenges of modern and future systems across the system stack with a special focus on computer architecture. We help design fundamentally better systems leveraging security-oriented hardware-software co-design, data-centric security, and testing principles. In addition, our group is interested in building health-oriented systems with a focus on agent-based simulations and genome analysis.</p>
+            <p><b style="display:inline-block; text-decoration:none; color:#0f0f0f; font-weight:800;">Join the team!</b> We are always looking for self-motivated people. Please fill out <a href="https://forms.gle/WJwrxu6dcakuKiQbA" style="display:inline-block; text-decoration:none; font-weight:800;">this application form</a>&nbsp;to join us.<b style="color:#e27a2a"></b></p>
+            <p><b style="color:#ff0a0a">For PhD positions:</b> Please <a href="https://career.cispa.de/jobs/apply/51" style="display:inline-block; text-decoration:none; font-weight:800;">apply here</a> after filling the form.</p> 
+        </div>
+        <div class="col-12 col-md-6 order-2 order-md-2">
+            <div class="ratio ratio-16x9">
+                <iframe src="https://www.youtube.com/embed/videoseries?si=WjX4vboubIWfPFJt&amp;list=PLR2v9CSXd9Q934pbj01xEDpfqBtpgvzBO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mb-2 mt-4">
+        <p>
+            {{#each research_areas}}
+            <span class="badge text-body border border-2"><i class="fa fa-{{ this.icon }} fact-icon"></i>{{ this.area }}</span>
+            {{/each}}
+        </p>
+    </div>
+    
+    <h2 class="mt-5">Team</h2>
+    {{> team }}
+    
+    <h2 class="mt-5">Recent Collaborators</h2>
+    {{> recent_collaborators }}
+
+    <h2 class="mt-5">Selected Publications</h2>
+    {{> selected_publications }}
+
+    <h2 class="mt-5">Other Publications</h2>
+    {{> other_publications }}
+
+    <h2 class="mt-5">Technical Reports</h2>
+    {{> technical_reports }}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>    
+</html>

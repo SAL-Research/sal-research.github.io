@@ -1,0 +1,12 @@
+<div class="research-topics">
+    <div class="topics-grid">
+        {{#each research_topics}}
+        <div class="topic-card">
+            <h3><i class="fa-solid fa-{{icon}}"></i> {{topic}}</h3>
+            {{#each description_paragraphs}}
+            <p>{{ this }}</p>
+            {{/each}}
+        </div>
+        {{/each}}
+    </div>
+</div>

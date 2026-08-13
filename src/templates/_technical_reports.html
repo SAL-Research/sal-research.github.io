@@ -1,0 +1,27 @@
+<ul class="publication-list">
+    {{#each other_publications}}
+    {{#if (eq this.type "techreport")}}
+    <li class="publication-item">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="title">"{{this.title}}"</div>
+                <div class="authors">{{#each this.authors}}{{#if this.underline}}<u>{{/if}}{{this.firstname}} {{this.lastname}}{{#if this.underline}}</u>{{/if}}{{#unless @last}},{{#if this.equalcontrib}}<sup>*</sup>{{/if}} {{/unless}}{{/each}}</div>
+                <div class="venue">
+                    {{#if (eq this.type "conference")}}in Proceedings of the {{/if}}
+                    <i>{{this.venue}}</i>, {{this.year}}
+                </div>
+                <div class="links">
+                {{#each this.sources}}
+                    {{this.text}}:{{#each this.urls}} <a href="{{this.url}}">[ {{this.type}} ]</a>{{/each}}
+                    <!-- {{#unless @last}}<br>{{/unless}} -->
+                {{/each}}
+                </div>
+                {{#each this.awards}}
+                    <div class="award">{{this.name}} {{this.year}}</div>
+                {{/each}}
+            </div>
+        </div>
+    </li>
+    {{/if}}
+    {{/each}}
+</ul>

@@ -1,0 +1,26 @@
+    <div>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">
+            {{#each members}}
+            <div class="col">
+                <div class="card h-100">
+                    {{#if this.web}}
+                    <a href="{{ this.web }}" class="text-decoration-none text-reset">
+                    {{/if}}
+                        <img src="{{ this.photo }}" class="card-img-top" alt="{{ this.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ this.name }}</h5>
+                            <p class="card-text">{{ this.role }}</p>
+                            {{#if this.email}}
+                            <a href="mailto:{{ this.email }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-envelope"></i> Contact
+                            </a>
+                            {{/if}}
+                        </div>
+                    {{#if this.web}}
+                    </a>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>

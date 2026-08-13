@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Secure and Sustainable System Scaling Lab</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <base target="_blank">
+</head>
+<body>
+    <div class="container page">
+        {{> s4l-header }}
+        <h1>Publications in BibTeX Format</h1>
+        <div class="publication-list">
+            {{#each publications}}
+                <div class="publication-item">
+                    <div class="bibtex-content">
+                        @{{this.bibtextype}} { {{this.label}},<br>
+                                <p class="bibtex-indented">title = \{{ {{this.title}} }},</p>
+                                <p class="bibtex-indented">author = { {{#each this.authors}} {{#if this.lastnamelatex}}{{this.lastnamelatex}}{{else}}{{this.lastname}}{{/if}}, {{#if this.firstnamelatex}}{{this.firstnamelatex}}{{else}}{{this.firstname}}{{/if}}{{#unless @last}} and {{/unless}}{{/each}} },</p>
+                                <p class="bibtex-indented">{{#if (eq this.type "conference")}}booktitle{{else}}journal{{/if}} = { {{this.venue}} },</p>
+                                <p class="bibtex-indented">year = { {{this.year}} }</p>
+                        }
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

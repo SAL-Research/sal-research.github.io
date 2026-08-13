@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ name }}. {{ title }}</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <base target="_blank">
+</head>
+<body>
+<div class="container page">
+    <div class="border-2 border-print-0 border-dark " style="padding-bottom: 0px !important;">
+        <div class="row">
+            <div class="col-4 col-md-3 col-lg-2 d-none d-md-block"> 
+                <!--  offset-lg-1 ">  -->
+                <!-- align-md-self-center text-center -->
+                <img src="photo.jpg" class="rounded-circle img-fluid" alt="">
+            </div>
+            <!-- <div class="col-print-6 col-12 col-md-5 d-flex justify-content-between flex-column"> -->
+            <div class="col-print-8 col-12 col-md-9 d-flex justify-content-between flex-column">
+                <div>
+                    <h1 class="mb-0">{{ name }}</h1>
+                    <div class="fs-5">{{#each titles}}{{ this }}<br>{{/each}}</div>
+                </div>
+            
+            <!-- </div>
+            
+            <div class="col-print-6 col-12 col-md-4 offset-lg-1 col-lg-4"> -->
+                <ul class="list-group list-group-flush">
+                    {{#each facts}}
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <!-- <span class="text-nowrap" style="font-size: medium;">{{ @key }}</span> -->
+                        <span class="text-nowrap">{{{ this }}}</span>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+            <!-- <div class="col-print-2 ">
+                <img src="qrcode.png" class="rounded-circle img-fluid" alt="Personal photo">
+            </div> -->
+        </div>
+    </div>
+
+    <div class="border-bottom border-2 border-print-0 border-dark ">
+        <p>I am a tenure-track faculty, leading the <a href="s4l.html">Secure and Sustainable System Scaling Lab</a> at <a href="https://cispa.de">Helmholtz Institute Center of Information Security (CISPA)</a>. 
+        My current research aims enabling secure and sustainable system scaling as chips get denser and many users share chips. 
+        We push the boundaries of secure and sustainable system scaling via conducting research on high-performance, energy-efficient, and secure computer architectures and systems.</p>
+
+        <p><b style="display:inline-block; text-decoration:none; color:#0f0f0f; font-weight:800; color:#c63e15">Join the team!</b> We are always looking for self-motivated people. Please fill out <a href="https://forms.gle/WJwrxu6dcakuKiQbA" style="display:inline-block; text-decoration:none; font-weight:800; color:#c63e15">this application form</a>&nbsp;to join us.<b style="color:#e27a2a"></b></p>
+        <!-- <p><b style="color:#e27a2a">For PhD positions:</b> Please <a href="https://career.cispa.de/jobs/apply/51" style="display:inline-block; text-decoration:none; font-weight:800;">apply here</a> after filling the form.</p>  -->
+    </div>
+
+
+    <div class="border-bottom border-2 border-print-0 border-dark ">
+        <h2 class="mb-4" id="co-supervised-publications">Selected Publications</h2>
+        {{> selected_publications }}
+        <h2 class="mb-4" id="theses">PhD Dissertation</h2>
+        {{> theses }}
+    </div>  
+
+    <div class="border-bottom border-2 border-print-0 border-dark ">
+        <h2 class="mb-4"  id="talks">Selected Talks and Lectures</h2>
+        <div class="row d-block d-md-flex">
+        {{#each talks}}
+            <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12 border-2">
+                <h3 class="">{{ venue }}</h3>
+                
+                <!-- <div class="video-responsive" >
+                    <iframe width="560" height="315" src="{{ video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div> -->
+                <span class="screen"><a href="https://www.youtube.com/watch?v={{ video }}">
+                    <img src="https://img.youtube.com/vi/{{ thumbnail }}/hqdefault.jpg" alt="YouTube" style="max-width:100%;">
+                </a></span>
+                <p style="font-size: medium;">{{ title }}<br />
+                    <i class="fa-solid fa-clock"></i> {{ length }} |
+                    Video: <a href="https://www.youtube.com/watch?v={{ video }}"><i class="fa-brands fa-youtube"></i></a> |
+                    Slides: <a href="{{ ppt }}"><i class="fa-solid fa-file-powerpoint"></i></a> <a href="{{ pdf }}"><i class="fa-solid fa-file-pdf"></i></a> 
+                </p> 
+            </div>
+        {{/each}}
+        </div>
+    </div>
+
+    <div class="border-bottom border-2 border-print-0 border-dark ">
+        <h2 class="mb-4"  id="awards">Awards & Honors</h2>
+        <ul>
+            {{#each awards}}
+            <li>
+                <b>{{ award }}</b>, {{ year }} - {{ result }}
+                {{#if urls}}
+                {{#each urls}}
+                <a href="{{ url }}"><i class="fa-solid fa-{{ type }}"></i></a> 
+                {{/each}}
+                {{/if}}
+            {{/each}}
+        </ul>
+    </div>
+
+    
+
+
+    <div class="border-bottom border-2 border-print-0 border-dark ">
+        <h2 class="mb-4"  id="employment">Employment</h2>
+        {{#each positions}}
+        <div class="row d-block d-md-flex">
+            <!-- {{#unless @last}} mb-5{{/unless}} -->
+            <div class="col-md-3 col-lg-2 col-sm-12 col-xs-12">
+                {{ period }}
+            </div>
+            <div class="col-md-9 col-lg-10 col-sm-12 col-xs-12">
+                <span class="fw-normal">{{ title }} - {{ organization }}</span>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="border-bottom border-2 border-print-0 border-dark">
+        <h2 id="education">Education</h2>
+        <div class="row d-block d-md-flex">
+        {{#each educations}}
+             <div class="col-1 col-md-1">{{ period }}</div><div class="col-1 col-md-1">{{ degree }}</div><div class="col-10 col-md-10">{{ school }}</div>
+        {{/each}}
+        </div>
+    </div>
+        
+    
+
+    <div class="border-bottom border-2 border-print-0 border-dark ">
+        <h2 class="mb-4"  id="service">Service</h2>
+        {{#each services}}
+        <div class="row d-block d-md-flex">
+            <!-- {{#unless @last}} mb-5{{/unless}} -->
+            <div class="col-md-2 col-lg-1 col-sm-2 col-xs-2">
+                {{year}}
+            </div>
+            <div class="col-md-9 col-lg-10 col-sm-12 col-xs-12">
+                <p>
+                {{#each roles}}
+                    <span class="fw-normal">{{ role }} for {{ venues }}</span><br>
+                {{/each}}
+                </p>
+                
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="">
+        <h2 class="mb-4"  id="other-publications">Other Publications</h2>
+        {{> other_publications }}
+    </div>
+
+    <div class="border-bottom border-2 border-print-0 border-dark ">
+        <h2 class="mb-4"  id="technical-reports">Technical Reports</h2>
+        {{> technical_reports }}
+    </div>
+
+    <div >
+        <h2 id="hof">Publication Venues:</h2>
+        {{#each venue_counts}}
+        <span class="badge text-body border border-2" style="white-space: normal; display: inline-block;">
+            <a href="https://dblp.org/search/publ?q=author:Abdullah%20Giray%20Yaglikçi%20{{ this.[0] }}">
+                {{ this.[0] }}: {{ this.[1] }} papers <i class="fa-solid fa-square-up-right"></i>
+            </a> 
+        </span>
+        {{/each}}
+    </div> 
+
+    <div class="border-bottom border-1 border-print-0 border-dark">
+        <h2 id="collaborators">Recent Collaborators</h2>
+        {{#each unique_authors_last_five_years}}
+        <span class="badge text-body border border-2" style="white-space: normal; display: inline-block;">
+            <a href="https://dblp.org/search/publ?q=author:Abdullah%20Giray%20Yaglikçi:%20{{ this.[0] }}">
+                {{ this.[0] }} <i class="fa-solid fa-square-up-right"></i>
+            </a> 
+        </span>
+        {{/each}}
+    </div>
+
+    <p>
+        <time datetime="{{ buildinfo.date }}" class="small">Last update: {{ updated }}</time>
+    </p>
+</div>
+</body>
+</html>

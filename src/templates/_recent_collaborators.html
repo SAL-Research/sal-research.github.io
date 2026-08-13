@@ -1,0 +1,7 @@
+        {{#each unique_authors_last_five_years}}
+        <span class="badge text-body border border-2" style="white-space: normal; display: inline-block;">
+            <a href="https://dblp.org/search/publ?q=author:Abdullah%20Giray%20Yaglikçi:{{ this.[0] }}">
+                {{ this.[0] }} <i class="fa-solid fa-square-up-right"></i>
+            </a> 
+        </span>
+        {{/each}}
