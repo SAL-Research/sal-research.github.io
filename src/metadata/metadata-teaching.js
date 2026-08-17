@@ -21,12 +21,12 @@ module.exports = {
       description: 'Seminar and proseminar on cutting-edge topics in computer architecture, with a focus on memory systems, hardware security, and reliability.',
     },
     {
-      title: 'Computer Architecture',
+      title: 'CS 423 — Computer Architecture',
       institution: 'Bilkent University',
       term: 'Fall 2026',
       link: 'teaching/comparch-fall_2026/',
       icon: 'microchip',
-      description: 'Undergraduate course covering the fundamentals of computer architecture: ISA design, pipelining, caches, memory systems, and parallelism.',
+      description: 'Basic hardware structure of modern computing platforms: memory systems, storage, interconnects, multiprocessors, accelerators, and hardware/software cooperation. 4 homework assignments, midterm, and final.',
     },
   ],
 };
