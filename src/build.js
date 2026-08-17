@@ -20,7 +20,8 @@ const metadataDir = path.join(srcDir, 'metadata');
 // Templates that need additional metadata beyond what's auto-detected
 const ADDITIONAL_METADATA = {
   'bibtex.html': ['publications'],
-  'index.html': ['publications']
+  'index.html': ['publications'],
+  'teaching.html': ['s4l', 'teaching']
 };
 
 // Partials that should load a different metadata file
