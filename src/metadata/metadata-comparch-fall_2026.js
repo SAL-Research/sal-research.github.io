@@ -5,6 +5,9 @@
 // computed by the build: the day number counts lecture days across the course,
 // and the part letter (a, b, c) is the lecture's position within its day
 // (omitted for single-lecture days). Do not put lecture numbers in this file.
+// Exceptions: an explicit `number` (e.g. 'LR1') or `exam: true` keeps a day
+// out of the count; `alternatives: true` on a day marks mutually exclusive
+// candidate lectures that share the plain day number.
 //
 // During the semester, populate materials by replacing 'TBA' with a URL:
 //   - per lecture:  pptx, pdf, video (YouTube)
@@ -55,13 +58,13 @@ module.exports = {
   },
 
   homework_intro: 'Four homework assignments (40% total) plus one bonus homework. Handouts, git repositories, and submission links will be posted here when each homework is assigned.',
-  homework_note: 'Late submission cut-off for all labs: December 14, 2026.',
+  homework_note: 'Late submission cut-off for all labs: December 21, 2026.',
   homeworks: [
-    { key: 'bonus1', id: 'Bonus HW 1', topic: 'Paper Reviews', assigned: 'Sep 21', deadline: 'Dec 14', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
-    { key: 'hw1', id: 'HW 1', topic: 'Single-Cycle vs In-Order Pipeline Architectures', assigned: 'Sep 24', deadline: 'Oct 8', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
-    { key: 'hw2', id: 'HW 2', topic: 'Caching, Prefetching, and Branch Prediction', assigned: 'Oct 8', deadline: 'Oct 22', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
-    { key: 'hw3', id: 'HW 3', topic: 'Out-of-Order and Speculative Execution (Bonus: Spectre and Meltdown)', assigned: 'Oct 22', deadline: 'Nov 12', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
-    { key: 'hw4', id: 'HW 4', topic: 'Memory Scheduling', assigned: 'Nov 12', deadline: 'Dec 3', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
+    { key: 'bonus1', id: 'Bonus HW 1', topic: 'Paper Reviews', assigned: 'Oct 5', deadline: 'Dec 21', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
+    { key: 'hw1', id: 'HW 1', topic: 'Single-Cycle vs In-Order Pipeline Architectures', assigned: 'Sep 24', deadline: 'Oct 15', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
+    { key: 'hw2', id: 'HW 2', topic: 'Caching, Prefetching, and Branch Prediction', assigned: 'Oct 15', deadline: 'Oct 29', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
+    { key: 'hw3', id: 'HW 3', topic: 'Out-of-Order and Speculative Execution (Bonus: Spectre and Meltdown)', assigned: 'Oct 29', deadline: 'Nov 19', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
+    { key: 'hw4', id: 'HW 4', topic: 'Memory Scheduling', assigned: 'Nov 19', deadline: 'Dec 10', handout: 'TBA', repo: 'TBA', submission: 'TBA' },
   ],
 
   schedule_note: 'Slides (PPTX and PDF) and lecture videos will be linked next to each lecture as the semester progresses.',
@@ -86,51 +89,78 @@ module.exports = {
           lectures: [
             { title: 'ISA Design Principles', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Performance Evaluation', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
-            { title: 'Critical Paper Reviews in Computer Architecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Trends, Tradeoffs and Design Fundamentals of Computer Architecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
-          events: [{ type: 'assigned', hw: 'bonus1' }],
         },
         {
           date: 'Sep 24',
           lectures: [
-            { title: 'Trends, Tradeoffs and Design Fundamentals of Computer Architecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'In-Order Pipelined CPU Design, Hazards, and Data Forwarding', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
-            { title: 'Branch Prediction', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Precise Exceptions and Interrupts', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
           events: [{ type: 'assigned', hw: 'hw1' }],
         },
       ],
     },
     {
-      theme: 'Memory Subsystem',
+      theme: 'Out-of-Order Execution',
       days: [
         {
           date: 'Sep 28',
           lectures: [
-            { title: 'Memory Subsystem Overview', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
-            { title: 'Virtual Memory and Translation Lookaside Buffer', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
-            { title: 'SRAM and DRAM', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Out-of-Order Pipeline Design', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: "Tomasulo's Algorithm", pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'High Performance Substrate (HPS) and Checkpoint Repair', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+          ],
+          readings: [
+            'Smith and Pleszkun, "Implementing Precise Interrupts in Pipelined Processors," in ISCA, 1985.',
+            'Patt, Hwu, and Shebanow, "HPS, a New Microarchitecture: Rationale and Introduction," in MICRO, 1985.',
+            'Patt, Melvin, Hwu, and Shebanow, "Critical Issues Regarding HPS, a High Performance Microarchitecture," in MICRO, 1985.',
+            'Hwu and Patt, "Checkpoint Repair for Out-of-Order Execution Machines," ISCA 1987.',
+            'Patt, "Requirements, Bottlenecks, and Good Fortune: Agents for Microprocessor Evolution," Proceedings of the IEEE, vol. 89, no. 11, November 2001.',
           ],
         },
-        { date: 'Oct 1', note: 'No lecture — Homework 1 continues' },
+        { date: 'Oct 1', note: 'No lecture' },
       ],
     },
     {
-      theme: 'Memory Stalls, Pipeline Stalls, Out-of-Order Execution',
+      theme: 'Memory Subsystem',
       days: [
         {
           date: 'Oct 5',
           lectures: [
-            { title: 'Cache Organization and Design', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
-            { title: 'Deeper Look into DRAM Architecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
-            { title: 'Memory Request Scheduling', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Von Neumann Architecture and Memory Subsystem Overview', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Simplescalar and Superscalar', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Critical Paper Reviews in Computer Architecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
+          events: [{ type: 'assigned', hw: 'bonus1' }],
         },
         {
           date: 'Oct 8',
           lectures: [
-            { title: 'Pipeline Stalls, Prefetching', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
-            { title: 'Branch Prediction and Loop Unrolling', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Dataflow', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Virtual Memory and Translation Lookaside Buffer', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+          ],
+        },
+      ],
+    },
+    {
+      theme: 'Memory Stalls, Pipeline Stalls',
+      days: [
+        {
+          date: 'Oct 12',
+          lectures: [
+            { title: 'Cache Organization and Design', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'DRAM Architecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Memory Request Scheduling', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+          ],
+        },
+        {
+          date: 'Oct 15',
+          lectures: [
+            { title: 'Pipeline Stalls, Loop unrolling', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Prefetching', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Branch Prediction', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
           events: [
             { type: 'due', hw: 'hw1' },
@@ -143,17 +173,21 @@ module.exports = {
       theme: 'Speculative Execution',
       days: [
         {
-          date: 'Oct 12',
+          date: 'Oct 19',
+          alternatives: true,
           lectures: [
-            { title: "Out-of-Order Pipeline Design and Tomasulo's Algorithm", pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Speculative Execution from a Security Perspective', note: 'potential guest lecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Runahead Execution', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Oct 15',
+          date: 'Oct 22',
+          alternatives: true,
           lectures: [
-            { title: 'Speculative Execution from a Security Perspective', note: 'guest lecture by Michael Schwarz', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Speculative Execution from a Security Perspective', note: 'potential guest lecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: 'Runahead Execution', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
+          events: [{ type: 'note', icon: 'hourglass-half', text: 'Homework 2 continues' }],
         },
       ],
     },
@@ -161,14 +195,14 @@ module.exports = {
       theme: 'Multi-Core Architectures',
       days: [
         {
-          date: 'Oct 19',
+          date: 'Oct 26',
           lectures: [
             { title: 'Multi-Core Architecture', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Memory Consistency', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Oct 22',
+          date: 'Oct 29',
           lectures: [
             { title: 'Cache Coherency', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Cache Pollution', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
@@ -184,11 +218,16 @@ module.exports = {
       theme: 'Parallel Execution and GPU Architecture',
       days: [
         {
-          date: 'Oct 26',
+          date: 'Nov 2',
           lectures: [
-            { title: 'Parallelism, Heterogeneity, SIMD, and MIMD', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { title: "Parallelism, Heterogeneity, Flynn's Taxonomy", pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'GPU Architecture and Predicated Execution', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
+        },
+        {
+          date: 'Nov 5',
+          note: 'No lectures',
+          events: [{ type: 'note', icon: 'hourglass-half', text: 'Homework 3 continues' }],
         },
       ],
     },
@@ -196,16 +235,15 @@ module.exports = {
       theme: 'Midterm Week',
       days: [
         {
-          date: 'Nov 2',
+          date: 'Nov 9',
           lectures: [
-            { title: 'Review Session', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
+            { number: 'LR1', title: 'Review Session', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Nov 5',
-          lectures: [
-            { title: 'Midterm Exam in Class', exam: true },
-          ],
+          date: 'Nov 12',
+          exam: 'Midterm Exam',
+          events: [{ type: 'note', icon: 'hourglass-half', text: 'Homework 3 continues' }],
         },
       ],
     },
@@ -213,14 +251,14 @@ module.exports = {
       theme: 'Memory Robustness',
       days: [
         {
-          date: 'Nov 9',
+          date: 'Nov 16',
           lectures: [
             { title: 'Data Retention and Refresh', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Read Disturbance I: RowHammer, RowPress, and ColumnPress', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Nov 12',
+          date: 'Nov 19',
           lectures: [
             { title: 'Read Disturbance II: Mitigations', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Memory Performance and Cold Boot Attacks', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
@@ -236,14 +274,14 @@ module.exports = {
       theme: 'Emerging and Killed Memory Architectures',
       days: [
         {
-          date: 'Nov 16',
+          date: 'Nov 23',
           lectures: [
             { title: 'Phase-Change Memory, STT-MRAM, Resistive Memory', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Monolithic 3D Integration', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Nov 19',
+          date: 'Nov 26',
           lectures: [
             { title: 'NAND Flash Memory', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
@@ -254,17 +292,18 @@ module.exports = {
       theme: 'Memory-Centric Computation',
       days: [
         {
-          date: 'Nov 23',
+          date: 'Nov 30',
           lectures: [
             { title: 'Processing Near and Using Memory', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Processing Near and Using Flash Memory', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Nov 26',
+          date: 'Dec 3',
           lectures: [
             { title: 'Memory Centric Computing', note: 'guest lecture by Geraldo F. de Oliveira Jr., Huawei Zurich', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
+          events: [{ type: 'note', icon: 'hourglass-half', text: 'Homework 4 continues' }],
         },
       ],
     },
@@ -272,14 +311,14 @@ module.exports = {
       theme: 'System on Chip',
       days: [
         {
-          date: 'Nov 30',
+          date: 'Dec 7',
           lectures: [
             { title: 'Accelerators, Systolic Arrays', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Neuromorphic Computation', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Dec 3',
+          date: 'Dec 10',
           lectures: [
             { title: 'On-Chip Networks', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Interrupts and Polling', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
@@ -292,14 +331,14 @@ module.exports = {
       theme: 'Application-Oriented Architectures',
       days: [
         {
-          date: 'Dec 7',
+          date: 'Dec 14',
           lectures: [
             { title: 'Neural Networks and LLM Accelerators', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Architecture Solutions to Bioinformatics Workloads', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
           ],
         },
         {
-          date: 'Dec 10',
+          date: 'Dec 17',
           lectures: [
             { title: 'Agent-based Simulations', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
             { title: 'Graph Accelerators', pptx: 'TBA', pdf: 'TBA', video: 'TBA' },
@@ -308,23 +347,16 @@ module.exports = {
       ],
     },
     {
-      theme: '',
+      theme: 'Final Exam',
       days: [
         {
-          date: 'Dec 14',
-          note: 'No lecture',
+          date: 'Dec 21',
+          note: 'Review Session',
           events: [
             { type: 'due', hw: 'bonus1' },
-            { type: 'note', icon: 'clock', text: 'Late submission cut-off for all labs' },
+            { type: 'note', icon: 'clock', text: 'Late Submission Cut-Off for All Labs' },
           ],
         },
-        { date: 'Dec 17', note: 'No lecture' },
-      ],
-    },
-    {
-      theme: 'Final Exam Week',
-      days: [
-        { date: 'Dec 21', note: 'Review Session' },
         { date: 'Dec 24', exam: 'Final Exam' },
       ],
     },

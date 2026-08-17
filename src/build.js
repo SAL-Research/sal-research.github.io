@@ -245,8 +245,12 @@ function processCoursePages() {
  * Derive display data from the hierarchical course metadata:
  * - week.number: 1-based position in `weeks`
  * - lecture.number: "L<day><part>" where <day> counts lecture days across the
- *   whole course (days without lectures don't count) and <part> is a, b, c...
- *   by position within the day (omitted when the day has a single lecture)
+ *   whole course and <part> is a, b, c... by position within the day (omitted
+ *   when the day has a single lecture). Lectures with an explicit `number`
+ *   (e.g. 'LR1' for review sessions) or an `exam` flag keep it / stay
+ *   unnumbered and do not make their day count as a lecture day. Days with
+ *   `alternatives: true` list mutually exclusive candidates: all get the plain
+ *   day number without part letters.
  * - event.homework: resolves a schedule event's `hw` key against `homeworks`
  */
 function prepareCourseMetadata(metadata) {
@@ -257,10 +261,11 @@ function prepareCourseMetadata(metadata) {
   (metadata.weeks || []).forEach((week, weekIndex) => {
     week.number = weekIndex + 1;
     (week.days || []).forEach(day => {
-      if (day.lectures && day.lectures.length > 0) {
+      const numbered = (day.lectures || []).filter(l => !l.number && !l.exam);
+      if (numbered.length > 0) {
         lectureDay += 1;
-        const multipart = day.lectures.length > 1;
-        day.lectures.forEach((lecture, i) => {
+        const multipart = numbered.length > 1 && !day.alternatives;
+        numbered.forEach((lecture, i) => {
           lecture.number = `L${lectureDay}${multipart ? String.fromCharCode(97 + i) : ''}`;
         });
       }
