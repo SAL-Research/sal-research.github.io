@@ -1,6 +1,8 @@
 // Metadata for the teaching.html template
 // Each course links to its own standalone website under teaching/<slug>/
-// (course sites live in src/assets/teaching/ and are copied into the build as-is)
+// Courses with a `site` slug get a generated website at teaching/<site>/ from
+// src/templates/_course.html + src/metadata/metadata-<site>.js; courses with an
+// external `link` (and no `site`) just link out.
 
 module.exports = {
   courses: [
@@ -17,6 +19,7 @@ module.exports = {
       institution: 'Saarland University',
       term: 'Winter 2026',
       link: 'teaching/comparch_seminar-winter_2026/',
+      site: 'comparch_seminar-winter_2026',
       icon: 'chalkboard-user',
       description: 'Seminar and proseminar on cutting-edge topics in computer architecture, with a focus on memory systems, hardware security, and reliability.',
     },
@@ -25,6 +28,7 @@ module.exports = {
       institution: 'Bilkent University',
       term: 'Fall 2026',
       link: 'teaching/comparch-fall_2026/',
+      site: 'comparch-fall_2026',
       icon: 'microchip',
       description: 'Basic hardware structure of modern computing platforms: memory systems, storage, interconnects, multiprocessors, accelerators, and hardware/software cooperation. 4 homework assignments, midterm, and final.',
     },

@@ -16,6 +16,13 @@
         .course-hero a { color: #fff; }
         .section-title { border-bottom: 3px solid #3f4d8c; padding-bottom: .3rem; margin-top: 2.5rem; }
         .badge-term { background: rgba(255,255,255,.2); font-weight: 500; }
+        .lecture-list { margin-bottom: 0; padding-left: 1.1rem; }
+        .lecture-list li { margin-bottom: .15rem; }
+        .mat { white-space: nowrap; font-size: .85em; color: #6c757d; }
+        .mat a { text-decoration: none; }
+        tr.hw-row td { background: #fdf3e7; font-size: .95em; }
+        tr.exam-row td { background: #f6e3ea; font-weight: 500; }
+        .week-label { color: #6c757d; font-size: .85em; white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -29,9 +36,10 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#announcements">Announcements</a></li>
                     <li class="nav-item"><a class="nav-link" href="#description">Description</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#materials">Materials</a></li>
+                    
                     <li class="nav-item"><a class="nav-link" href="#grading">Grading</a></li>
+                    
+                    <li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../teaching.html"><i class="fa fa-arrow-left"></i> All Courses</a></li>
                 </ul>
@@ -57,29 +65,28 @@
         <h2 id="description" class="section-title">Course Description</h2>
         <p>In this seminar/proseminar, students read, present, and discuss cutting-edge research papers in computer architecture, with a focus on memory systems, hardware security, and reliability. Students learn how to critically analyze research papers, deliver technical presentations, and write reviews.</p>
 
-        <h2 id="schedule" class="section-title">Schedule</h2>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr><th>Week</th><th>Date</th><th>Topic</th><th>Materials</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>1</td><td>TBA</td><td>Introduction &amp; Logistics</td><td>TBA</td></tr>
-                    <tr><td>2</td><td>TBA</td><td>TBA</td><td>TBA</td></tr>
-                    <tr><td>3</td><td>TBA</td><td>TBA</td><td>TBA</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <h2 id="materials" class="section-title">Materials</h2>
-        <p>Lecture slides, papers, and supplementary materials will be posted here as the course progresses.</p>
 
         <h2 id="grading" class="section-title">Grading</h2>
         <p>Grading is based on paper presentations, written reviews, and participation in discussions. Details will be announced in the first session.</p>
 
+
+        <h2 id="schedule" class="section-title">Schedule</h2>
+        <p>The session plan and reading list will be posted here before the semester starts.</p>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead><tr><th style="min-width:7.5rem;">Date</th><th>Lectures</th></tr></thead>
+                <tbody>
+                    <tr><td>TBA<div class="week-label">Week 1</div></td><td><em>Introduction &amp; Logistics</em></td></tr>
+                    <tr><td>TBA<div class="week-label">Week 2</div></td><td><em>TBA</em></td></tr>
+                    <tr><td>TBA<div class="week-label">Week 3</div></td><td><em>TBA</em></td></tr>
+                </tbody>
+            </table>
+        </div>
+
         <h2 id="contact" class="section-title">Contact</h2>
         <p>Instructor: <a href="https://agyaglikci.github.io">Abdullah Giray Yağlıkçı</a> &mdash; <a href="mailto:giray@cispa.de">giray@cispa.de</a></p>
         <p>This course is offered by the <a href="https://sal-research.github.io">Secure and Sustainable System Scaling Lab</a>.</p>
+
     </main>
 
     <footer class="py-4 text-center text-muted border-top">

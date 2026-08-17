@@ -204,8 +204,41 @@ function build() {
   // Process templates
   const templates = getTemplateFiles();
   templates.forEach(processTemplate);
-  
+
+  // Process standalone course websites
+  processCoursePages();
+
   console.log('\nBuild completed!');
+}
+
+/**
+ * Render standalone course websites.
+ * Each course in metadata-teaching.js with a `site` slug is rendered from the
+ * shared _course.html template, populated with metadata-<site>.js, and written
+ * to teaching/<site>/index.html. Courses without `site` (external websites)
+ * are skipped.
+ */
+function processCoursePages() {
+  const teachingMetadata = loadMetadata('teaching');
+  const courses = ((teachingMetadata && teachingMetadata.courses) || []).filter(c => c.site);
+  if (courses.length === 0) return;
+
+  const source = fs.readFileSync(path.join(templatesDir, '_course.html'), 'utf-8');
+  const template = handlebars.compile(source);
+
+  courses.forEach(course => {
+    console.log(`\nProcessing course site: ${course.site}`);
+    const metadata = loadMetadata(course.site);
+    if (!metadata) {
+      console.warn(`  ! metadata-${course.site}.js not found, skipping`);
+      return;
+    }
+    const html = template(metadata);
+    const courseDir = path.join(outputDir, 'teaching', course.site);
+    fs.mkdirsSync(courseDir);
+    fs.writeFileSync(path.join(courseDir, 'index.html'), html);
+    console.log(`  → teaching/${course.site}/index.html`);
+  });
 }
 
 // Run build
