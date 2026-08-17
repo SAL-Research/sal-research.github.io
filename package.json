@@ -4,7 +4,7 @@
   "scripts": {
     "build": "node src/build.js",
     "postbuild": "cp -R dist/. .",
-    "watch": "chokidar '**/*' -i 'dist/**/*' -c 'npm run build'",
+    "watch": "chokidar 'src/**/*' -c 'npm run build'",
     "prestart": "npm run build",
     "start": "npm run watch & live-server dist",
     "predeploy": "npm run build",
