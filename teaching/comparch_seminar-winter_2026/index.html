@@ -20,9 +20,9 @@
         .lecture-list li { margin-bottom: .15rem; }
         .mat { white-space: nowrap; font-size: .85em; color: #6c757d; }
         .mat a { text-decoration: none; }
+        tr.week-header td { background: #3f4d8c14; font-weight: 600; }
         tr.hw-row td { background: #fdf3e7; font-size: .95em; }
         tr.exam-row td { background: #f6e3ea; font-weight: 500; }
-        .week-label { color: #6c757d; font-size: .85em; white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -76,9 +76,27 @@
             <table class="table align-middle">
                 <thead><tr><th style="min-width:7.5rem;">Date</th><th>Lectures</th></tr></thead>
                 <tbody>
-                    <tr><td>TBA<div class="week-label">Week 1</div></td><td><em>Introduction &amp; Logistics</em></td></tr>
-                    <tr><td>TBA<div class="week-label">Week 2</div></td><td><em>TBA</em></td></tr>
-                    <tr><td>TBA<div class="week-label">Week 3</div></td><td><em>TBA</em></td></tr>
+                    <tr class="week-header"><td colspan="2">Week 1: Introduction &amp;amp; Logistics</td></tr>
+                    <tr>
+                        <td>TBA</td>
+                        <td>
+                            <em>TBA</em>
+                        </td>
+                    </tr>
+                    <tr class="week-header"><td colspan="2">Week 2: TBA</td></tr>
+                    <tr>
+                        <td>TBA</td>
+                        <td>
+                            <em>TBA</em>
+                        </td>
+                    </tr>
+                    <tr class="week-header"><td colspan="2">Week 3: TBA</td></tr>
+                    <tr>
+                        <td>TBA</td>
+                        <td>
+                            <em>TBA</em>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

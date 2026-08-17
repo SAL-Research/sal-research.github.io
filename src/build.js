@@ -233,12 +233,46 @@ function processCoursePages() {
       console.warn(`  ! metadata-${course.site}.js not found, skipping`);
       return;
     }
-    const html = template(metadata);
+    const html = template(prepareCourseMetadata(metadata));
     const courseDir = path.join(outputDir, 'teaching', course.site);
     fs.mkdirsSync(courseDir);
     fs.writeFileSync(path.join(courseDir, 'index.html'), html);
     console.log(`  → teaching/${course.site}/index.html`);
   });
+}
+
+/**
+ * Derive display data from the hierarchical course metadata:
+ * - week.number: 1-based position in `weeks`
+ * - lecture.number: "L<day><part>" where <day> counts lecture days across the
+ *   whole course (days without lectures don't count) and <part> is a, b, c...
+ *   by position within the day (omitted when the day has a single lecture)
+ * - event.homework: resolves a schedule event's `hw` key against `homeworks`
+ */
+function prepareCourseMetadata(metadata) {
+  const homeworkByKey = {};
+  (metadata.homeworks || []).forEach(hw => { homeworkByKey[hw.key] = hw; });
+
+  let lectureDay = 0;
+  (metadata.weeks || []).forEach((week, weekIndex) => {
+    week.number = weekIndex + 1;
+    (week.days || []).forEach(day => {
+      if (day.lectures && day.lectures.length > 0) {
+        lectureDay += 1;
+        const multipart = day.lectures.length > 1;
+        day.lectures.forEach((lecture, i) => {
+          lecture.number = `L${lectureDay}${multipart ? String.fromCharCode(97 + i) : ''}`;
+        });
+      }
+      (day.events || []).forEach(event => {
+        if (event.hw) {
+          event.homework = homeworkByKey[event.hw];
+          if (!event.homework) console.warn(`  ! unknown homework key: ${event.hw}`);
+        }
+      });
+    });
+  });
+  return metadata;
 }
 
 // Run build

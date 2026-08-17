@@ -28,10 +28,10 @@ module.exports = {
     ],
   },
   schedule_note: 'The session plan and reading list will be posted here before the semester starts.',
-  schedule: [
-    { type: 'note', date: 'TBA', week: 'Week 1', text: 'Introduction &amp; Logistics' },
-    { type: 'note', date: 'TBA', week: 'Week 2', text: 'TBA' },
-    { type: 'note', date: 'TBA', week: 'Week 3', text: 'TBA' },
+  weeks: [
+    { theme: 'Introduction &amp; Logistics', days: [{ date: 'TBA', note: 'TBA' }] },
+    { theme: 'TBA', days: [{ date: 'TBA', note: 'TBA' }] },
+    { theme: 'TBA', days: [{ date: 'TBA', note: 'TBA' }] },
   ],
   contact_notes: [
     'This course is offered by the <a href="https://sal-research.github.io">Secure and Sustainable System Scaling Lab</a>.',

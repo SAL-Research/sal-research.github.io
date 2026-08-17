@@ -20,9 +20,9 @@
         .lecture-list li { margin-bottom: .15rem; }
         .mat { white-space: nowrap; font-size: .85em; color: #6c757d; }
         .mat a { text-decoration: none; }
+        tr.week-header td { background: {{ accent }}14; font-weight: 600; }
         tr.hw-row td { background: #fdf3e7; font-size: .95em; }
         tr.exam-row td { background: #f6e3ea; font-weight: 500; }
-        .week-label { color: #6c757d; font-size: .85em; white-space: nowrap; }
     </style>
 </head>
 <body>
@@ -38,8 +38,8 @@
                     {{#if description}}<li class="nav-item"><a class="nav-link" href="#description">Description</a></li>{{/if}}
                     {{#if logistics}}<li class="nav-item"><a class="nav-link" href="#logistics">Logistics</a></li>{{/if}}
                     {{#if grading}}<li class="nav-item"><a class="nav-link" href="#grading">Grading</a></li>{{/if}}
-                    {{#if homework}}<li class="nav-item"><a class="nav-link" href="#homework">Homework</a></li>{{/if}}
-                    {{#if schedule}}<li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>{{/if}}
+                    {{#if homeworks}}<li class="nav-item"><a class="nav-link" href="#homework">Homework</a></li>{{/if}}
+                    {{#if weeks}}<li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>{{/if}}
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../teaching.html"><i class="fa fa-arrow-left"></i> All Courses</a></li>
                 </ul>
@@ -108,42 +108,54 @@
         {{/each}}
         {{/if}}
 
-        {{#if homework}}
+        {{#if homeworks}}
         <h2 id="homework" class="section-title">Homework</h2>
-        {{#if homework.intro}}<p>{{{ homework.intro }}}</p>{{/if}}
+        {{#if homework_intro}}<p>{{{ homework_intro }}}</p>{{/if}}
         <div class="table-responsive">
             <table class="table table-striped">
-                <thead><tr><th>Homework</th><th>Topic</th><th>Assigned</th><th>Due</th><th>Handout</th></tr></thead>
+                <thead><tr><th>Homework</th><th>Topic</th><th>Assigned</th><th>Deadline</th><th>Handout</th><th>Git Repo</th><th>Submission</th></tr></thead>
                 <tbody>
-                    {{#each homework.rows}}
-                    <tr><td>{{ this.id }}</td><td>{{ this.topic }}</td><td>{{ this.assigned }}</td><td>{{ this.due }}</td>
-                        <td>{{#if (eq this.handout "TBA")}}TBA{{else}}<a href="{{ this.handout }}"><i class="fa fa-file-pdf"></i> Handout</a>{{/if}}</td></tr>
+                    {{#each homeworks}}
+                    <tr>
+                        <td>{{ this.id }}</td>
+                        <td>{{ this.topic }}</td>
+                        <td>{{ this.assigned }}</td>
+                        <td>{{ this.deadline }}</td>
+                        <td>{{#if (eq this.handout "TBA")}}TBA{{else}}<a href="{{ this.handout }}"><i class="fa fa-file-pdf"></i> Handout</a>{{/if}}</td>
+                        <td>{{#if (eq this.repo "TBA")}}TBA{{else}}<a href="{{ this.repo }}"><i class="fa-brands fa-github"></i> Repo</a>{{/if}}</td>
+                        <td>{{#if (eq this.submission "TBA")}}TBA{{else}}<a href="{{ this.submission }}"><i class="fa fa-upload"></i> Submit</a>{{/if}}</td>
+                    </tr>
                     {{/each}}
                 </tbody>
             </table>
         </div>
-        {{#if homework.note}}<p><em>{{{ homework.note }}}</em></p>{{/if}}
+        {{#if homework_note}}<p><em>{{{ homework_note }}}</em></p>{{/if}}
         {{/if}}
 
-        {{#if schedule}}
+        {{#if weeks}}
         <h2 id="schedule" class="section-title">Schedule</h2>
         {{#if schedule_note}}<p>{{{ schedule_note }}}</p>{{/if}}
         <div class="table-responsive">
             <table class="table align-middle">
                 <thead><tr><th style="min-width:7.5rem;">Date</th><th>Lectures</th></tr></thead>
                 <tbody>
-                    {{#each schedule}}
-                    {{#if (eq this.type "day")}}
+                    {{#each weeks}}
+                    <tr class="week-header"><td colspan="2">Week {{ this.number }}{{#if this.theme}}: {{ this.theme }}{{/if}}</td></tr>
+                    {{#each this.days}}
+                    {{#if this.exam}}
+                    <tr class="exam-row"><td>{{ this.date }}</td><td><i class="fa fa-file-pen"></i> {{ this.exam }}</td></tr>
+                    {{else}}
                     <tr>
-                        <td>{{ this.date }}{{#if this.week}}<div class="week-label">{{ this.week }}</div>{{/if}}</td>
-                        <td>{{#if this.theme}}<b>{{ this.theme }}</b>{{/if}}
+                        <td>{{ this.date }}</td>
+                        <td>
+                            {{#if this.note}}<em>{{{ this.note }}}</em>{{/if}}
                             {{#if this.lectures}}
                             <ul class="lecture-list">
                                 {{#each this.lectures}}
-                                <li>{{ this.id }}: {{ this.title }}{{#if this.note}} <em>({{ this.note }})</em>{{/if}}
-                                    {{#if (or this.slides this.video)}}
-                                    <span class="mat">[{{#if (eq this.slides "TBA")}}Slides: TBA{{else}}<a href="{{ this.slides }}"><i class="fa fa-file-powerpoint"></i> Slides</a>{{/if}} · {{#if (eq this.video "TBA")}}Video: TBA{{else}}<a href="{{ this.video }}"><i class="fa-brands fa-youtube"></i> Video</a>{{/if}}]</span>
-                                    {{/if}}
+                                <li>{{#if this.exam}}<b><i class="fa fa-file-pen"></i> {{ this.number }}: {{ this.title }}</b>{{else}}{{ this.number }}: {{ this.title }}{{#if this.note}} <em>({{ this.note }})</em>{{/if}}
+                                    {{#if (or this.pptx this.pdf this.video)}}
+                                    <span class="mat">[{{#if (eq this.pptx "TBA")}}PPTX: TBA{{else}}<a href="{{ this.pptx }}"><i class="fa fa-file-powerpoint"></i> PPTX</a>{{/if}} · {{#if (eq this.pdf "TBA")}}PDF: TBA{{else}}<a href="{{ this.pdf }}"><i class="fa fa-file-pdf"></i> PDF</a>{{/if}} · {{#if (eq this.video "TBA")}}Video: TBA{{else}}<a href="{{ this.video }}"><i class="fa-brands fa-youtube"></i> Video</a>{{/if}}]</span>
+                                    {{/if}}{{/if}}
                                 </li>
                                 {{/each}}
                             </ul>
@@ -151,15 +163,10 @@
                         </td>
                     </tr>
                     {{/if}}
-                    {{#if (eq this.type "milestone")}}
-                    <tr class="hw-row"><td></td><td>{{#each this.events}}{{#unless @first}} &nbsp;·&nbsp; {{/unless}}<i class="fa fa-{{ this.icon }}"></i> <b>{{ this.text }}</b>{{#if this.detail}}: {{ this.detail }}{{/if}}{{#if this.handout}} — handout: {{#if (eq this.handout "TBA")}}TBA{{else}}<a href="{{ this.handout }}"><i class="fa fa-file-pdf"></i> PDF</a>{{/if}}{{/if}}{{/each}}</td></tr>
+                    {{#if this.events}}
+                    <tr class="hw-row"><td></td><td>{{#each this.events}}{{#unless @first}} &nbsp;·&nbsp; {{/unless}}{{#if (eq this.type "assigned")}}<i class="fa fa-pen-to-square"></i> <b>{{ this.homework.id }} assigned</b>: {{ this.homework.topic }} — handout: {{#if (eq this.homework.handout "TBA")}}TBA{{else}}<a href="{{ this.homework.handout }}"><i class="fa fa-file-pdf"></i> PDF</a>{{/if}} · repo: {{#if (eq this.homework.repo "TBA")}}TBA{{else}}<a href="{{ this.homework.repo }}"><i class="fa-brands fa-github"></i> Git</a>{{/if}}{{/if}}{{#if (eq this.type "due")}}<i class="fa fa-flag-checkered"></i> <b>{{ this.homework.id }} due</b> — submission: {{#if (eq this.homework.submission "TBA")}}TBA{{else}}<a href="{{ this.homework.submission }}"><i class="fa fa-upload"></i> Submit</a>{{/if}}{{/if}}{{#if (eq this.type "note")}}<i class="fa fa-{{ this.icon }}"></i> <b>{{ this.text }}</b>{{/if}}{{/each}}</td></tr>
                     {{/if}}
-                    {{#if (eq this.type "exam")}}
-                    <tr class="exam-row"><td>{{ this.date }}{{#if this.week}}<div class="week-label">{{ this.week }}</div>{{/if}}</td><td><i class="fa fa-file-pen"></i> {{ this.text }}</td></tr>
-                    {{/if}}
-                    {{#if (eq this.type "note")}}
-                    <tr><td>{{ this.date }}{{#if this.week}}<div class="week-label">{{ this.week }}</div>{{/if}}</td><td><em>{{{ this.text }}}</em></td></tr>
-                    {{/if}}
+                    {{/each}}
                     {{/each}}
                 </tbody>
             </table>
