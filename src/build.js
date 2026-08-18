@@ -225,6 +225,8 @@ function processCoursePages() {
 
   const source = fs.readFileSync(path.join(templatesDir, '_course.html'), 'utf-8');
   const template = handlebars.compile(source);
+  const readingsSource = fs.readFileSync(path.join(templatesDir, '_course_readings.html'), 'utf-8');
+  const readingsTemplate = handlebars.compile(readingsSource);
 
   courses.forEach(course => {
     console.log(`\nProcessing course site: ${course.site}`);
@@ -233,11 +235,15 @@ function processCoursePages() {
       console.warn(`  ! metadata-${course.site}.js not found, skipping`);
       return;
     }
-    const html = template(prepareCourseMetadata(metadata));
+    const prepared = prepareCourseMetadata(metadata);
     const courseDir = path.join(outputDir, 'teaching', course.site);
     fs.mkdirsSync(courseDir);
-    fs.writeFileSync(path.join(courseDir, 'index.html'), html);
+    fs.writeFileSync(path.join(courseDir, 'index.html'), template(prepared));
     console.log(`  → teaching/${course.site}/index.html`);
+    if (prepared.readings && prepared.readings.length > 0) {
+      fs.writeFileSync(path.join(courseDir, 'readings.html'), readingsTemplate(prepared));
+      console.log(`  → teaching/${course.site}/readings.html`);
+    }
   });
 }
 
@@ -252,10 +258,18 @@ function processCoursePages() {
  *   `alternatives: true` list mutually exclusive candidates: all get the plain
  *   day number without part letters.
  * - event.homework: resolves a schedule event's `hw` key against `homeworks`
+ * - lecture.readings: keys into `readings`; each referenced reading collects
+ *   its relevant lectures (number, title, date) for the readings page, and the
+ *   lecture gets `readings_anchor` for linking into readings.html
  */
 function prepareCourseMetadata(metadata) {
   const homeworkByKey = {};
   (metadata.homeworks || []).forEach(hw => { homeworkByKey[hw.key] = hw; });
+  const readingByKey = {};
+  (metadata.readings || []).forEach(reading => {
+    readingByKey[reading.key] = reading;
+    reading.relevant_lectures = [];
+  });
 
   let lectureDay = 0;
   (metadata.weeks || []).forEach((week, weekIndex) => {
@@ -269,6 +283,19 @@ function prepareCourseMetadata(metadata) {
           lecture.number = `L${lectureDay}${multipart ? String.fromCharCode(97 + i) : ''}`;
         });
       }
+      (day.lectures || []).forEach(lecture => {
+        if (lecture.readings && lecture.readings.length > 0) {
+          lecture.readings_anchor = lecture.readings[0];
+          lecture.readings.forEach(key => {
+            const reading = readingByKey[key];
+            if (!reading) {
+              console.warn(`  ! unknown reading key: ${key}`);
+              return;
+            }
+            reading.relevant_lectures.push({ number: lecture.number, title: lecture.title, date: day.date });
+          });
+        }
+      });
       (day.events || []).forEach(event => {
         if (event.hw) {
           event.homework = homeworkByKey[event.hw];

@@ -1,0 +1,3 @@
+[submodule "teaching/comparch-fall-2026"]
+	path = teaching/comparch-fall-2026
+	url = git@github.com:SAL-Research/comparch-fall-2026.git

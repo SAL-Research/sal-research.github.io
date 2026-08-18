@@ -35,11 +35,10 @@
             <div class="collapse navbar-collapse" id="courseNav">
                 <ul class="navbar-nav ms-auto">
                     {{#if announcements}}<li class="nav-item"><a class="nav-link" href="#announcements">Announcements</a></li>{{/if}}
-                    {{#if description}}<li class="nav-item"><a class="nav-link" href="#description">Description</a></li>{{/if}}
-                    {{#if logistics}}<li class="nav-item"><a class="nav-link" href="#logistics">Logistics</a></li>{{/if}}
-                    {{#if grading}}<li class="nav-item"><a class="nav-link" href="#grading">Grading</a></li>{{/if}}
                     {{#if homeworks}}<li class="nav-item"><a class="nav-link" href="#homework">Homework</a></li>{{/if}}
                     {{#if weeks}}<li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>{{/if}}
+                    {{#if readings}}<li class="nav-item"><a class="nav-link" href="readings.html">Readings</a></li>{{/if}}
+                    {{#if description}}<li class="nav-item"><a class="nav-link" href="#courseinfo">Course Information</a></li>{{/if}}
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="../../teaching.html"><i class="fa fa-arrow-left"></i> All Courses</a></li>
                 </ul>
@@ -60,6 +59,7 @@
     </header>
 
     <main class="container pb-5">
+
         {{#if announcements}}
         <h2 id="announcements" class="section-title">Announcements</h2>
         <ul>
@@ -69,47 +69,8 @@
         </ul>
         {{/if}}
 
-        {{#if description}}
-        <h2 id="description" class="section-title">Course Description</h2>
-        {{#each description}}
-        <p>{{{ this }}}</p>
-        {{/each}}
-        {{/if}}
-
-        {{#if logistics}}
-        <h2 id="logistics" class="section-title">Logistics</h2>
-        <div class="table-responsive">
-            <table class="table">
-                <tbody>
-                    {{#each logistics}}
-                    <tr><td><b>{{ this.label }}</b></td><td>{{{ this.value }}}</td></tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-        {{/if}}
-
-        {{#if grading}}
-        <h2 id="grading" class="section-title">Grading</h2>
-        {{#if grading.rows}}
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead><tr><th>Component</th><th>Type</th><th>Count</th><th>Total Contribution</th></tr></thead>
-                <tbody>
-                    {{#each grading.rows}}
-                    <tr><td>{{ this.component }}</td><td>{{ this.type }}</td><td>{{ this.count }}</td><td>{{ this.contribution }}</td></tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
-        {{/if}}
-        {{#each grading.notes}}
-        <p>{{{ this }}}</p>
-        {{/each}}
-        {{/if}}
-
         {{#if homeworks}}
-        <h2 id="homework" class="section-title">Homework</h2>
+        <h2 id="homework" class="section-title">Homeworks</h2>
         {{#if homework_intro}}<p>{{{ homework_intro }}}</p>{{/if}}
         <div class="table-responsive">
             <table class="table table-striped">
@@ -154,20 +115,11 @@
                                 {{#each this.lectures}}
                                 <li>{{#if this.exam}}<b><i class="fa fa-file-pen"></i> {{ this.number }}: {{ this.title }}</b>{{else}}{{ this.number }}: {{ this.title }}{{#if this.note}} <em>({{ this.note }})</em>{{/if}}
                                     {{#if (or this.pptx this.pdf this.video)}}
-                                    <span class="mat">[{{#if (eq this.pptx "TBA")}}PPTX: TBA{{else}}<a href="{{ this.pptx }}"><i class="fa fa-file-powerpoint"></i> PPTX</a>{{/if}} · {{#if (eq this.pdf "TBA")}}PDF: TBA{{else}}<a href="{{ this.pdf }}"><i class="fa fa-file-pdf"></i> PDF</a>{{/if}} · {{#if (eq this.video "TBA")}}Video: TBA{{else}}<a href="{{ this.video }}"><i class="fa-brands fa-youtube"></i> Video</a>{{/if}}]</span>
+                                    <span class="mat">[{{#if (eq this.pptx "TBA")}}PPTX: TBA{{else}}<a href="{{ this.pptx }}"><i class="fa fa-file-powerpoint"></i> PPTX</a>{{/if}} · {{#if (eq this.pdf "TBA")}}PDF: TBA{{else}}<a href="{{ this.pdf }}"><i class="fa fa-file-pdf"></i> PDF</a>{{/if}} · {{#if (eq this.video "TBA")}}Video: TBA{{else}}<a href="{{ this.video }}"><i class="fa-brands fa-youtube"></i> Video</a>{{/if}}{{#if this.readings_anchor}} · <a href="readings.html#{{ this.readings_anchor }}"><i class="fa fa-book-open"></i> Readings</a>{{/if}}]</span>
                                     {{/if}}{{/if}}
                                 </li>
                                 {{/each}}
                             </ul>
-                            {{/if}}
-                            {{#if this.readings}}
-                            <div class="mt-1"><b>Readings:</b>
-                                <ul class="lecture-list">
-                                    {{#each this.readings}}
-                                    <li><em>{{{ this }}}</em></li>
-                                    {{/each}}
-                                </ul>
-                            </div>
                             {{/if}}
                         </td>
                     </tr>
@@ -182,11 +134,53 @@
         </div>
         {{/if}}
 
-        <h2 id="contact" class="section-title">Contact</h2>
-        <p>{{ instructor.role }}: <a href="{{ instructor.web }}">{{ instructor.name }}</a> &mdash; <a href="mailto:{{ instructor.email }}">{{ instructor.email }}</a></p>
-        {{#each contact_notes}}
+        {{#if description}}
+        <h2 id="courseinfo" class="section-title">Course Information</h2>
+        {{#each description}}
         <p>{{{ this }}}</p>
         {{/each}}
+
+            {{#if logistics}}
+            <h3 id="logistics" class="section-title">Catalog Information</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        {{#each logistics}}
+                        <tr><td><b>{{ this.label }}</b></td><td>{{{ this.value }}}</td></tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            {{#each grading.notes}}
+            <p>{{{ this }}}</p>
+            {{/each}}
+            {{/if}}
+
+            {{#if grading}}
+            <h3 id="grading" class="section-title">Grading</h3>
+            {{#if grading.rows}}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead><tr><th>Component</th><th>Type</th><th>Count</th><th>Total Contribution</th></tr></thead>
+                    <tbody>
+                        {{#each grading.rows}}
+                        <tr><td>{{ this.component }}</td><td>{{ this.type }}</td><td>{{ this.count }}</td><td>{{ this.contribution }}</td></tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            {{/if}}
+            {{/if}}
+
+            <h3 id="contact" class="section-title">Contact</h3>
+            <p>{{ instructor.role }}: <a href="{{ instructor.web }}">{{ instructor.name }}</a> &mdash; <a href="mailto:{{ instructor.email }}">{{ instructor.email }}</a></p>
+            {{#each contact_notes}}
+            <p>{{{ this }}}</p>
+            {{/each}}
+        {{/if}}
+
+
+
 
     </main>
 
