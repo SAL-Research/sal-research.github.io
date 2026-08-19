@@ -1,29 +1,18 @@
 {
-  "name": "cv-template",
-  "description": "The Curriculum Vitae Template",
+  "name": "sal-research-website",
+  "description": "Website of the Secure and Sustainable System Scaling Lab",
+  "private": true,
   "scripts": {
     "build": "node src/build.js",
-    "postbuild": "cp -R dist/. .",
     "watch": "chokidar 'src/**/*' -c 'npm run build'",
     "prestart": "npm run build",
-    "start": "npm run watch & live-server dist",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "start": "npm run watch & live-server dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sneas/cv-project.git"
+    "url": "git+https://github.com/SAL-Research/sal-research.github.io.git"
   },
-  "keywords": [
-    "cv",
-    "resume"
-  ],
-  "author": "Dmytro Snisarenko <dmytro@sneas.io>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/sneas/cv-project/issues"
-  },
-  "homepage": "https://github.com/sneas/cv-project#readme",
   "devDependencies": {
     "chokidar-cli": "^3.0.0",
     "dayjs": "^1.11.4",

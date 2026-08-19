@@ -82,42 +82,101 @@
             <!-- <div class="col-print-2 ">
                 <img src="qrcode.png" class="rounded-circle img-fluid" alt="Personal photo">
             </div> -->
-        </div>        <h1>Teaching</h1>
-        <p>Courses taught by members of the lab. Each course has its own website with schedule, materials, and announcements.</p>
+        </div>        <!-- <h1>Teaching</h1> -->
+        <!-- <p>Courses taught by members of the lab. Each course has its own website with schedule, materials, and announcements.</p> -->
 
-        <div class="row g-4 mt-1">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
+        <section id="courses-ongoing" hidden>
+            <h2 class="mt-4">Ongoing Courses</h2>
+            <div class="row g-4"></div>
+        </section>
+
+        <hr>
+        
+        <section id="courses-upcoming" hidden>
+            <h2 class="mt-4">Upcoming Courses</h2>
+            <div class="row g-4"></div>
+        </section>
+
+        <hr>
+        
+        <section id="courses-finished" hidden>
+            <h2 class="mt-4">Finished Courses</h2>
+            <div class="row g-4"></div>
+        </section>
+
+        <!-- Rendered chronologically by start date; the script below moves each
+             card into the matching section using data-start/data-end. Without
+             JavaScript this list stays visible as a plain chronological list. -->
+        <div id="courses-all" class="row g-4 mt-0">
+            <div class="col-12 course-card" data-start="2026-03-01" data-end="2026-09-30">
+                <div class="h-100">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><i class="fa fa-chalkboard-user fact-icon"></i>Seminar/Proseminar in Computer Architecture</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Saarland University — Summer 2026</h6>
+                        <h3 class="card-title"><i class="fa fa-chalkboard-user fact-icon"></i> Seminar/Proseminar in Computer Architecture</h3>
+                        <p class="card-subtitle mb-2 text-muted">Saarland University — Summer 2026</p>
                         <p class="card-text">Seminar and proseminar on cutting-edge topics in computer architecture, with a focus on memory systems, hardware security, and reliability.</p>
-                        <a href="https://cms.cispa.saarland/comparch_s26/" target="_self" class="btn btn-outline-dark mt-auto">Course Website <i class="fa fa-arrow-right"></i></a>
+                        <a href="https://cms.cispa.saarland/comparch_s26/" target="_self" class="">Course Website <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
+            <div class="col-12 course-card" data-start="2026-09-15" data-end="2027-01-10">
+                <div class="h-100">
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><i class="fa fa-chalkboard-user fact-icon"></i>Seminar/Proseminar in Computer Architecture</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Saarland University — Winter 2026</h6>
-                        <p class="card-text">Seminar and proseminar on cutting-edge topics in computer architecture, with a focus on memory systems, hardware security, and reliability.</p>
-                        <a href="teaching/comparch_seminar-winter_2026/" target="_self" class="btn btn-outline-dark mt-auto">Course Website <i class="fa fa-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title"><i class="fa fa-microchip fact-icon"></i>CS 423 — Computer Architecture</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Bilkent University — Fall 2026</h6>
+                        <h3 class="card-title"><i class="fa fa-microchip fact-icon"></i> CS 423/520 — Computer Architecture</h3>
+                        <p class="card-subtitle mb-2 text-muted">Bilkent University — Fall 2026</p>
                         <p class="card-text">Basic hardware structure of modern computing platforms: memory systems, storage, interconnects, multiprocessors, accelerators, and hardware/software cooperation. 4 homework assignments, midterm, and final.</p>
-                        <a href="https://sal-research.github.io/comparch-fall-2026/" target="_self" class="btn btn-outline-dark mt-auto">Course Website <i class="fa fa-arrow-right"></i></a>
+                        <a href="https://sal-research.github.io/comparch-fall-2026/" target="_self" class="">Course Website <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 course-card" data-start="2026-10-01" data-end="2027-03-31">
+                <div class="h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h3 class="card-title"><i class="fa fa-chalkboard-user fact-icon"></i> Seminar/Proseminar in Computer Architecture</h3>
+                        <p class="card-subtitle mb-2 text-muted">Saarland University — Winter 2026</p>
+                        <p class="card-text">Seminar and proseminar on cutting-edge topics in computer architecture, with a focus on memory systems, hardware security, and reliability.</p>
+                        <a href="teaching/comparch_seminar-winter_2026/" target="_self" class="">Course Website <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Segment courses into upcoming / ongoing / finished from their semester
+// dates. Test hook: pass ?today=YYYY-MM-DD to view the page as of that date.
+document.addEventListener('DOMContentLoaded', function () {
+    var override = new URLSearchParams(window.location.search).get('today');
+    var today = override ? new Date(override + 'T00:00:00') : new Date();
+    if (isNaN(today.getTime())) today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    var source = document.getElementById('courses-all');
+    var sections = {
+        upcoming: document.querySelector('#courses-upcoming .row'),
+        ongoing: document.querySelector('#courses-ongoing .row'),
+        finished: document.querySelector('#courses-finished .row'),
+    };
+
+    Array.prototype.slice.call(source.querySelectorAll('.course-card')).forEach(function (card) {
+        var status = 'ongoing';
+        if (card.dataset.start && card.dataset.end) {
+            var start = new Date(card.dataset.start + 'T00:00:00');
+            var end = new Date(card.dataset.end + 'T00:00:00');
+            if (today < start) status = 'upcoming';
+            else if (today > end) status = 'finished';
+        }
+        // Upcoming/ongoing keep chronological order (soonest first); finished
+        // courses list most recent first.
+        if (status === 'finished') sections.finished.prepend(card);
+        else sections[status].appendChild(card);
+    });
+
+    Object.keys(sections).forEach(function (key) {
+        if (sections[key].children.length > 0) sections[key].parentElement.hidden = false;
+    });
+    source.hidden = true;
+});
+</script>
 </body>
 </html>

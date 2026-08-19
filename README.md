@@ -1,41 +1,38 @@
-# The Curriculum Vitae Template
+# SAL-Research website
 
-You are a fantastic developer. Keep your CV on GitHub. Host it on GitHub Pages. Have both HTML and PDF versions automatically generated and consistent.
+Website of the Secure and Sustainable System Scaling Lab, published via
+GitHub Pages at <https://sal-research.github.io/>.
 
-## What does this project do?
+## How it works
 
-* Helps you to manage your CV as a web app (HTML + CSS + JS).
-* Automatically generates and publishes HTML and PDF version on every push to `main`.
+Pages are Handlebars templates populated from metadata — never hand-written
+HTML.
 
-Demo: [http://sneas.github.io/cv-template](http://sneas.github.io/cv-template).
+- `src/templates/` — page templates (`_`-prefixed files are partials)
+- `src/metadata/` — all content as data (`metadata-*.js`)
+- `src/assets/` — files copied verbatim into the site root
+- `src/build.js` — renders everything into `dist/` (not tracked in git)
 
-Real world example: [http://sneas.github.io/cv](http://sneas.github.io/cv).
+Standalone course websites (e.g. `teaching/comparch-fall-2026`) live in their
+own repositories, referenced here as submodules, and are linked from the
+teaching page.
 
-## Motivation
+## Developing
 
-GitHub Pages is probably the best place developer could store their CV. Giving a potential employer a link to your CV stored on GitHub shows your intense desire for automation and stands you out.
+```sh
+npm install
+npm start        # build + live-reload server on http://127.0.0.1:8080
+```
 
-The idea behind **The Curriculum Vitae Template** is to provide anyone with a quick solution for creating and managing CVs (both HTML and PDF versions) with the help of GitHub.
+Edit templates or metadata under `src/` — the watcher rebuilds automatically.
 
-## Installation
+## Publishing
 
-1. Create a new repo out of this template by clicking [this link](https://github.com/sneas/cv-template/generate).
-1. Clone the newly created repo.
-1. Install project dependencies with `npm install`.
-1. Run `npm run deploy` to initialize `gh-pages`. This is a one time action. Further deployments will be initiated by GitHub Actions on every push to `main`.
+Every push to `main` builds and deploys the site via
+`.github/workflows/deploy.yml` (GitHub Pages, Actions source). Generated
+files are never committed.
 
-## Usage
+## Talks archive
 
-1. Start local development server with `npm start`.
-1. Update contents of `src` folder to fit your needs. This item is explained [below](#update-contents).
-1. Commit and push your changes.
-1. GitHub Actions will automatically build the latest version and deploy it to GitHub Pages.
-1. Open `http://your-username.github.io/your-cv-repo`.
-
-### Update contents
-
-The project uses [HandlebarsJS](https://github.com/wycats/handlebars.js/) as a template engine.
-
-The main HTML template is located in [src/templates/index.html](src/templates/index.html). Metadata for the template could be found in [src/metadata/metadata.js](src/metadata/metadata.js).
-
-Don't forget to update [src/assets/favicon.ico](src/assets/favicon.ico). You can generate a new favicon out of your photo with [icoconvert.com](http://icoconvert.com/).
+`talks/` stores presentation files via Git LFS. It is repository storage,
+not part of the published website.

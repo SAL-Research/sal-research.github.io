@@ -156,12 +156,13 @@ function registerPartials() {
  */
 function processTemplate(templateFile) {
   console.log(`\nProcessing: ${templateFile}`);
-  
+
   const templatePath = path.join(templatesDir, templateFile);
   const source = fs.readFileSync(templatePath, 'utf-8');
-  
+
   // Build metadata
   const metadata = buildMetadata(templateFile, source);
+  if (metadata.courses && metadata.academic_calendars) prepareTeachingMetadata(metadata);
   
   // Compile template
   const template = handlebars.compile(source);
@@ -176,6 +177,36 @@ function processTemplate(templateFile) {
   fs.writeFileSync(outputPath, html);
   
   console.log(`  → ${templateFile}`);
+}
+
+/**
+ * Derive course start/end dates from institution + term via the
+ * academic_calendars table in the teaching metadata, and sort courses
+ * chronologically by start date. A course can override the derived dates
+ * with explicit `start`/`end` ('YYYY-MM-DD') fields. The teaching page
+ * segments courses into upcoming/ongoing/finished from these dates at
+ * view time.
+ */
+function prepareTeachingMetadata(metadata) {
+  const iso = (year, [month, day]) =>
+    `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+  metadata.courses.forEach(course => {
+    const match = /^(\w+) (\d{4})$/.exec(course.term || '');
+    const calendar = metadata.academic_calendars[course.institution];
+    const semester = match && calendar && calendar[match[1]];
+    if (semester) {
+      const year = parseInt(match[2], 10);
+      course.start_iso = course.start || iso(year, semester.start);
+      course.end_iso = course.end || iso(semester.end_next_year ? year + 1 : year, semester.end);
+    } else {
+      course.start_iso = course.start || null;
+      course.end_iso = course.end || null;
+      if (!course.start_iso) console.warn(`  ! no calendar match for "${course.title}" (${course.institution}, ${course.term})`);
+    }
+  });
+
+  metadata.courses.sort((a, b) => (a.start_iso || '').localeCompare(b.start_iso || ''));
 }
 
 /**
