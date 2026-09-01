@@ -9,8 +9,8 @@ module.exports = {
     email: '',
     groupfacts: {
     'social': `<a href="https://dblp.org/pid/147/4019.html"><i class="fa fa-graduation-cap fact-icon" aria-hidden="true"></i></a>
-    <a href="https://github.com/Secure-Sustainable-System-Scaling-Lab"><i class="fa-brands fa-github fact-icon"></i></a>
-    <a href="https://www.youtube.com/@SecSysLab"><i class="fa-brands fa-youtube fact-icon"></i></a>`,
+    <a href="https://github.com/SAL-Research"><i class="fa-brands fa-github fact-icon"></i></a>
+    <a href="https://www.youtube.com/@S4L-Talks"><i class="fa-brands fa-youtube fact-icon"></i></a>`,
     'join': `<a href="https://forms.gle/WJwrxu6dcakuKiQbA" style="display:inline-block;
             text-decoration:none;
             color:#ff0a0a;
