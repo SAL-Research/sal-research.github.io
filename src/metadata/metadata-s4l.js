@@ -57,7 +57,7 @@ module.exports = {
       name: 'Amina Sokoli', 
       role: 'Affiliated Researcher', 
       photo: 'photos/team/amina-sokoli.jpg',
-      web: 'https://www.linkedin.com/in/amina-sokoli-a34554247/',
+      web: 'https://aminatpwk.github.io/',
     },
   ],
   research_areas: [
