@@ -49,20 +49,6 @@ const theses = [
 
 
 const selected_publications = [
-  // İsmail Emir Yuksel, Ataberk Olgun, Nisa Bostancı, Oğuzhan Canpolat, Geraldo Francisco de Oliveira Junior, Mohammad Sadrosadati, A. Giray Yağlıkçı, and Onur Mutlu,
-// "In-DRAM True Random Number Generation Using Simultaneous Multiple-Row Activation: An Experimental Study of Real DRAM Chips"
-// Proceedings of the 43rd IEEE International Conference on Computer Design (ICCD), Dallas, TX, USA, November 2025.
-// [Slides (pptx) (pdf)]
-// İsmail Emir Yuksel, Ataberk Olgun, Nisa Bostanci, Haocong Luo, A. Giray Yaglikci, and Onur Mutlu,
-// "ColumnDisturb: Understanding Column-based Read Disturbance in Real DRAM Chips and Implications for Future Systems"
-// Proceedings of the 58th International Symposium on Microarchitecture (MICRO), Seoul, South Korea, October 2025.
-// [Slides (pptx) (pdf)]
-// Nisa Bostanci, Oğuzhan Canpolat, Ataberk Olgun, İsmail Emir Yuksel, Konstantinos Kanellopoulos, Mohammad Sadrosadati, A. Giray Yaglikci, and Onur Mutlu,
-// "Understanding and Mitigating Covert Channel and Side Channel Vulnerabilities Introduced by RowHammer Defenses"
-// Proceedings of the 58th International Symposium on Microarchitecture (MICRO), Seoul, South Korea, October 2025.
-// [Slides (pptx) (pdf)]
-// [LeakyHammer Source Code]
-// Officially artifact evaluated as available, functional, and reproduced.
   {
     title: "Terracotta: Enabling the Adoption of New DRAM Techniques via a Flexible DRAM Interface and Memory Controller",
     venue: "58th International Symposium on Microarchitecture (MICRO), Athens, Greece",
