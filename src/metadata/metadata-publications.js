@@ -64,6 +64,40 @@ const selected_publications = [
 // [LeakyHammer Source Code]
 // Officially artifact evaluated as available, functional, and reproduced.
   {
+    title: "Terracotta: Enabling the Adoption of New DRAM Techniques via a Flexible DRAM Interface and Memory Controller",
+    venue: "58th International Symposium on Microarchitecture (MICRO), Athens, Greece",
+    year: 2026,
+    type: "conference",
+    bibtextype: 'inproceedings',
+    label: 'songara2026terracotta',
+    authors: [
+      {lastname: 'Songara', firstname:'Harsh'},
+      {lastname: 'Kanellopoulos', firstname:'Konstantinos'},
+      {lastname: 'Bostanci', firstname:'Nisa'},
+      {lastname: 'Sgouras', firstname:'Konstantinos Marios'},
+      {lastname: 'Olgun', firstname:'Ataberk'},
+      {lastname: 'Yüksel', firstname:'Ismail Emir'},
+      {lastname: 'Kakolyris', firstname:'Andreas Kosmas'},
+      {lastname: 'Yağlıkçı', firstname:'A. Giray', lastnamelatex: 'Ya\\u{g}l{\\i}k\\c{c}{\\i}', underline: true},
+      {lastname: 'Mutlu', firstname:'Onur'}
+    ],
+    sources:[
+      // {
+      //   text:'Preprint',
+      //   urls: [
+      //     {type: 'pdf', url:''},
+      //   ]
+      // },
+      // {
+      //   text:'Slides',
+      //   urls: [
+      //     {type: 'pptx', url:''},
+      //     {type: 'pdf', url:''}
+      //   ]
+      // }
+    ]
+  },
+  {
     title: "ColumnKeeper: Efficient Solutions to the ColumnDisturb Vulnerability in DRAM-based Systems",
     venue: "ACM International Symposium on Computer Architecture (ISCA), Raleigh, North Carolina, USA",
     year: 2026,
