@@ -1,8 +1,7 @@
 // Metadata for the teaching.html template.
 //
-// Courses with a `site` slug get a generated website at teaching/<site>/ from
-// src/templates/_course.html + src/metadata/metadata-<site>.js; courses with an
-// external `link` (and no `site`) just link out.
+// Each course links out to its own website via `link` (standalone course
+// websites live in their own repositories).
 //
 // Each course's start/end dates are derived by the build from `institution` +
 // `term` (e.g. 'Fall 2026') using the academic_calendars table below; the

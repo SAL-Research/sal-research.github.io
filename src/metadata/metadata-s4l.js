@@ -70,4 +70,17 @@ module.exports = {
     {area: "Testing and Verification", icon: "magnifying-glass"},
   ],
 
+  // Home-page video: picked at build time from the channel's public uploads by
+  // newness and interaction rate (see src/utils/youtube.js). The deploy
+  // workflow rebuilds daily so the pick stays current.
+  youtube: {
+    channel_id: 'UCPqbz23zyVRXRFv-vtNyZGw', // @AbdullahGirayYağlıkçı
+    exclude: [
+      'y_0mzP54G0I', // Hirzenbach to ETZ | 4K POV Cycling in Zurich
+    ],
+    half_life_days: 180, // a video's newness weight halves every this many days
+    prior_views: 100, // smooths the interaction rate of videos with few views
+    // Embedded when no video can be picked (no API key, API error)
+    fallback_playlist: 'PLR2v9CSXd9Q934pbj01xEDpfqBtpgvzBO', // Research Talks
+  },
 };

@@ -1,12 +1,9 @@
 const handlebars = require('handlebars');
 const fs = require('fs-extra');
 const path = require('path');
-const markdownHelper = require('./utils/helpers/markdown');
 const defaultMetadata = require('./metadata/metadata');
-const getSlug = require('speakingurl');
 const dayjs = require('dayjs');
-const repoName = require('git-repo-name');
-const username = require('git-username');
+const { pickFeaturedVideo } = require('./utils/youtube');
 
 // ============================================================================
 // CONFIGURATION
@@ -120,7 +117,6 @@ function buildMetadata(templateFile, templateContent) {
  * Register all Handlebars helpers
  */
 function registerHelpers() {
-  handlebars.registerHelper('markdown', markdownHelper);
   handlebars.registerHelper('eq', (a, b) => a === b);
   handlebars.registerHelper('or', function() {
     const args = Array.prototype.slice.call(arguments, 0, -1);
@@ -153,8 +149,9 @@ function registerPartials() {
 
 /**
  * Process a single template file
+ * @param {Object} globals - Build-time values available to every template
  */
-function processTemplate(templateFile) {
+function processTemplate(templateFile, globals) {
   console.log(`\nProcessing: ${templateFile}`);
 
   const templatePath = path.join(templatesDir, templateFile);
@@ -166,11 +163,7 @@ function processTemplate(templateFile) {
   
   // Compile template
   const template = handlebars.compile(source);
-  const html = template({
-    ...metadata,
-    baseUrl: `https://${username()}.github.io/${repoName.sync()}`,
-    updated: dayjs().format('MMMM D, YYYY')
-  });
+  const html = template({ ...metadata, ...globals });
   
   // Write output
   const outputPath = path.join(outputDir, templateFile);
@@ -222,121 +215,32 @@ function getTemplateFiles() {
 // MAIN BUILD PROCESS
 // ============================================================================
 
-function build() {
+async function build() {
   console.log('Starting build...\n');
-  
+
   // Setup
   fs.emptyDirSync(outputDir);
   fs.copySync(path.join(srcDir, 'assets'), outputDir);
-  
+
   registerHelpers();
   registerPartials();
-  
+
+  // Home-page video, picked once per build from the channel's public uploads
+  console.log('Picking featured video...');
+  const globals = {
+    updated: dayjs().format('MMMM D, YYYY'),
+    featured_video: await pickFeaturedVideo(loadMetadata('s4l').youtube)
+  };
+
   // Process templates
   const templates = getTemplateFiles();
-  templates.forEach(processTemplate);
-
-  // Process standalone course websites
-  processCoursePages();
+  templates.forEach(templateFile => processTemplate(templateFile, globals));
 
   console.log('\nBuild completed!');
 }
 
-/**
- * Render standalone course websites.
- * Each course in metadata-teaching.js with a `site` slug is rendered from the
- * shared _course.html template, populated with metadata-<site>.js, and written
- * to teaching/<site>/index.html. Courses without `site` (external websites)
- * are skipped.
- */
-function processCoursePages() {
-  const teachingMetadata = loadMetadata('teaching');
-  const courses = ((teachingMetadata && teachingMetadata.courses) || []).filter(c => c.site);
-  if (courses.length === 0) return;
-
-  const source = fs.readFileSync(path.join(templatesDir, '_course.html'), 'utf-8');
-  const template = handlebars.compile(source);
-  const readingsSource = fs.readFileSync(path.join(templatesDir, '_course_readings.html'), 'utf-8');
-  const readingsTemplate = handlebars.compile(readingsSource);
-
-  courses.forEach(course => {
-    console.log(`\nProcessing course site: ${course.site}`);
-    const metadata = loadMetadata(course.site);
-    if (!metadata) {
-      console.warn(`  ! metadata-${course.site}.js not found, skipping`);
-      return;
-    }
-    const prepared = prepareCourseMetadata(metadata);
-    const courseDir = path.join(outputDir, 'teaching', course.site);
-    fs.mkdirsSync(courseDir);
-    fs.writeFileSync(path.join(courseDir, 'index.html'), template(prepared));
-    console.log(`  → teaching/${course.site}/index.html`);
-    if (prepared.readings && prepared.readings.length > 0) {
-      fs.writeFileSync(path.join(courseDir, 'readings.html'), readingsTemplate(prepared));
-      console.log(`  → teaching/${course.site}/readings.html`);
-    }
-  });
-}
-
-/**
- * Derive display data from the hierarchical course metadata:
- * - week.number: 1-based position in `weeks`
- * - lecture.number: "L<day><part>" where <day> counts lecture days across the
- *   whole course and <part> is a, b, c... by position within the day (omitted
- *   when the day has a single lecture). Lectures with an explicit `number`
- *   (e.g. 'LR1' for review sessions) or an `exam` flag keep it / stay
- *   unnumbered and do not make their day count as a lecture day. Days with
- *   `alternatives: true` list mutually exclusive candidates: all get the plain
- *   day number without part letters.
- * - event.homework: resolves a schedule event's `hw` key against `homeworks`
- * - lecture.readings: keys into `readings`; each referenced reading collects
- *   its relevant lectures (number, title, date) for the readings page, and the
- *   lecture gets `readings_anchor` for linking into readings.html
- */
-function prepareCourseMetadata(metadata) {
-  const homeworkByKey = {};
-  (metadata.homeworks || []).forEach(hw => { homeworkByKey[hw.key] = hw; });
-  const readingByKey = {};
-  (metadata.readings || []).forEach(reading => {
-    readingByKey[reading.key] = reading;
-    reading.relevant_lectures = [];
-  });
-
-  let lectureDay = 0;
-  (metadata.weeks || []).forEach((week, weekIndex) => {
-    week.number = weekIndex + 1;
-    (week.days || []).forEach(day => {
-      const numbered = (day.lectures || []).filter(l => !l.number && !l.exam);
-      if (numbered.length > 0) {
-        lectureDay += 1;
-        const multipart = numbered.length > 1 && !day.alternatives;
-        numbered.forEach((lecture, i) => {
-          lecture.number = `L${lectureDay}${multipart ? String.fromCharCode(97 + i) : ''}`;
-        });
-      }
-      (day.lectures || []).forEach(lecture => {
-        if (lecture.readings && lecture.readings.length > 0) {
-          lecture.readings_anchor = lecture.readings[0];
-          lecture.readings.forEach(key => {
-            const reading = readingByKey[key];
-            if (!reading) {
-              console.warn(`  ! unknown reading key: ${key}`);
-              return;
-            }
-            reading.relevant_lectures.push({ number: lecture.number, title: lecture.title, date: day.date });
-          });
-        }
-      });
-      (day.events || []).forEach(event => {
-        if (event.hw) {
-          event.homework = homeworkByKey[event.hw];
-          if (!event.homework) console.warn(`  ! unknown homework key: ${event.hw}`);
-        }
-      });
-    });
-  });
-  return metadata;
-}
-
 // Run build
-build();
+build().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

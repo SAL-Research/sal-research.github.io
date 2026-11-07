@@ -32,6 +32,13 @@ Every push to `main` builds and deploys the site via
 `.github/workflows/deploy.yml` (GitHub Pages, Actions source). Generated
 files are never committed.
 
+The home-page video is picked at build time from the YouTube channel's
+public uploads by newness and interaction rate (`youtube` in
+`src/metadata/metadata-s4l.js`). This needs a YouTube Data API v3 key in the
+`YOUTUBE_API_KEY` repository secret (or environment variable locally); without
+it the build embeds the fallback playlist. The workflow also runs daily so
+the pick stays current.
+
 ## Talks archive
 
 `talks/` stores presentation files via Git LFS. It is repository storage,

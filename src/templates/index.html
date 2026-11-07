@@ -26,7 +26,11 @@
         </div>
         <div class="col-12 col-md-6 order-2 order-md-2">
             <div class="ratio ratio-16x9">
-                <iframe src="https://www.youtube.com/embed/videoseries?si=WjX4vboubIWfPFJt&amp;list=PLR2v9CSXd9Q934pbj01xEDpfqBtpgvzBO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                {{#if featured_video}}
+                <iframe src="https://www.youtube.com/embed/{{ featured_video.id }}" title="{{ featured_video.title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                {{else}}
+                <iframe src="https://www.youtube.com/embed/videoseries?list={{ youtube.fallback_playlist }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                {{/if}}
             </div>
         </div>
     </div>
