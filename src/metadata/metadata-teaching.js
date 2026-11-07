@@ -39,7 +39,7 @@ module.exports = {
       title: 'Seminar/Proseminar in Computer Architecture',
       institution: 'Saarland University',
       term: 'Winter 2026',
-      link: 'https://cms.cispa.saarland/comparch_s26/',
+      link: 'https://cms.cispa.saarland/comparch_w26/',
       icon: 'chalkboard-user',
       description: 'Seminar and proseminar on cutting-edge topics in computer architecture, with a focus on memory systems, hardware security, and reliability.',
     },
