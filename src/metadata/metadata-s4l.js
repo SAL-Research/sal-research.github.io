@@ -36,6 +36,12 @@ module.exports = {
       web: 'https://cispa.de/en/people/c01sosu',
     },
     {
+      name: 'Daniyal Hussain',
+      role: 'Student Assistant',
+      photo: 'photos/team/daniyal-hussain.jpg',
+      web: 'https://cispa.de/en/people/c01dahu',
+    },
+    {
       name: 'Zeynep Hüma Karapınar', 
       role: 'Research Intern', 
       photo: 'photos/team/zeynep-huma-karapinar.jpg',
