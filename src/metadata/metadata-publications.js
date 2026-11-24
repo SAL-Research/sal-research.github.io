@@ -894,6 +894,30 @@ const other_publications = [
         }
       ]
     },
+    { title: "TeraAgent: A Distributed Agent-Based Simulation Engine for Simulating Half a Trillion Agents",
+      venue: "arXiv:2509.24063 [cs.DC]",
+      year: 2025,
+      type: "techreport",
+      bibtextype: 'article',
+      label: 'breitwieser2025teraagent',
+      authors: [
+        {lastname: 'Breitwieser', firstname: 'Lukas'},
+        {lastname: 'Hesam', firstname: 'Ahmad'},
+        {lastname: 'Yağlıkçı', firstname: 'A. Giray', lastnamelatex: 'Ya\\u{g}l{\\i}k\\c{c}{\\i}', underline: true},
+        {lastname: 'Sadrosadati', firstname: 'Mohammad'},
+        {lastname: 'Rademakers', firstname: 'Fons'},
+        {lastname: 'Mutlu', firstname: 'Onur'}
+      ],
+      keywords: ['agent-based simulation', 'distributed computing', 'high-performance computing', 'simulation'],
+      sources:[
+        {
+          text:'Preprint',
+          urls: [
+            {type: 'pdf', url:'https://arxiv.org/pdf/2509.24063'},
+          ]
+        }
+      ]
+    },
     { title: "PuDHammer: Experimental Analysis of Read Disturbance Effects of Processing-using-DRAM in Real DRAM Chips",
       venue: "52nd Annual International Symposium on Computer Architecture (ISCA), Tokyo, Japan",
       year: 2025,
