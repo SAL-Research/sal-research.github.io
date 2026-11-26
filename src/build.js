@@ -3,7 +3,6 @@ const fs = require('fs-extra');
 const path = require('path');
 const defaultMetadata = require('./metadata/metadata');
 const dayjs = require('dayjs');
-const { pickFeaturedVideo } = require('./utils/youtube');
 
 // ============================================================================
 // CONFIGURATION
@@ -225,11 +224,8 @@ async function build() {
   registerHelpers();
   registerPartials();
 
-  // Home-page video, picked once per build from the channel's public uploads
-  console.log('Picking featured video...');
   const globals = {
-    updated: dayjs().format('MMMM D, YYYY'),
-    featured_video: await pickFeaturedVideo(loadMetadata('s4l').youtube)
+    updated: dayjs().format('MMMM D, YYYY')
   };
 
   // Process templates
